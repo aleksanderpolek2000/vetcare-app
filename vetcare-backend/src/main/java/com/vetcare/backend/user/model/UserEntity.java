@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -16,8 +18,8 @@ import java.util.Set;
 @Builder
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
@@ -40,10 +42,10 @@ public class UserEntity {
 
     @Column(name = "created_at", nullable = false)
     @Builder.Default
-    private Instant createAt = Instant.now();
+    private LocalDateTime createAt = LocalDateTime.now();
     @Column(name = "updated_at", nullable = false)
     @Builder.Default
-    private Instant updateAt = Instant.now();
+    private LocalDateTime updateAt = LocalDateTime.now();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
