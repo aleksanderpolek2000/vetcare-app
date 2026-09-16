@@ -3,6 +3,8 @@ package com.vetcare.backend.user.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
@@ -13,7 +15,7 @@ import lombok.*;
 public class RoleEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
