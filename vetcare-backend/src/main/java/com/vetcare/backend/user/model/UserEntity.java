@@ -2,6 +2,8 @@ package com.vetcare.backend.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -41,10 +43,10 @@ public class UserEntity {
     private boolean isActive = true;
 
     @Column(name = "created_at", nullable = false)
-    @Builder.Default
+    @CreationTimestamp
     private LocalDateTime createAt = LocalDateTime.now();
     @Column(name = "updated_at", nullable = false)
-    @Builder.Default
+    @UpdateTimestamp
     private LocalDateTime updateAt = LocalDateTime.now();
 
     @ManyToMany(fetch = FetchType.EAGER)

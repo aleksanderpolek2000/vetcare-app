@@ -6,14 +6,11 @@ import com.vetcare.backend.user.dto.LoginRequest;
 import com.vetcare.backend.user.dto.UserResponse;
 import com.vetcare.backend.user.service.UserService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -34,10 +31,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<@NonNull AuthResponse> loginUser (@Valid @RequestBody LoginRequest request){
+    public ResponseEntity<@NonNull AuthResponse> loginUser(@Valid @RequestBody LoginRequest request) {
 
         AuthResponse authResponse = userService.login(request);
 
         return ResponseEntity.ok(authResponse);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<@NonNull String> getMe(Authentication authentication) {
+        return ResponseEntity.ok("Zalogowany użytkownik: " + authentication.getName());
     }
 }

@@ -1,4 +1,4 @@
-package com.vetcare.backend.config;
+package com.vetcare.backend.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

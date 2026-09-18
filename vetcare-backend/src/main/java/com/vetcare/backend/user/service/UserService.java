@@ -1,13 +1,13 @@
 package com.vetcare.backend.user.service;
 
-import com.vetcare.backend.config.JwtService;
+import com.vetcare.backend.auth.service.JwtService;
 import com.vetcare.backend.user.dto.AuthResponse;
 import com.vetcare.backend.user.dto.CreateUserRequest;
 import com.vetcare.backend.user.dto.LoginRequest;
 import com.vetcare.backend.user.dto.UserResponse;
 import com.vetcare.backend.user.model.UserEntity;
 import com.vetcare.backend.user.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
