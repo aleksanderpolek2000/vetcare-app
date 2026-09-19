@@ -52,4 +52,13 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
+    @ExceptionHandler(InvalidPetException.class)
+    public ResponseEntity<@NonNull ErrorResponse> handlerInvalidPetException(InvalidPetException ex) {
+        String errorMessage = "Pet error: " + ex.getMessage();
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), errorMessage, LocalDateTime.now());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
 }

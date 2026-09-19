@@ -1,9 +1,12 @@
 package com.vetcare.backend.pet.service;
 
+import com.vetcare.backend.auth.model.CustomUserDetails;
 import com.vetcare.backend.common.dto.PageResponse;
+import com.vetcare.backend.common.exception.InvalidPetException;
 import com.vetcare.backend.pet.Specifications.PetSpecifications;
 import com.vetcare.backend.pet.dto.CreatePetRequest;
 import com.vetcare.backend.pet.dto.PetResponse;
+import com.vetcare.backend.pet.dto.UpdatePetRequest;
 import com.vetcare.backend.pet.model.PetEntity;
 import com.vetcare.backend.pet.repository.PetRepository;
 import com.vetcare.backend.user.model.UserEntity;
@@ -16,6 +19,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +61,32 @@ public class PetService {
         Page<@NonNull PetResponse> mappedPetPage = petPage.map(this::mapToResponse);
 
         return PageResponse.from(mappedPetPage);
+    }
+
+    @Transactional
+    public PetResponse updatePet(UUID id, UpdatePetRequest updatePetRequest, CustomUserDetails userDetails) {
+
+        UserEntity user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika"));
+
+        PetEntity pet = petRepository.findByIdAndOwnerId(id, user.getId()).orElseThrow(() -> new InvalidPetException("Nie znaleziono zwierzęcia"));
+
+        pet.setName(updatePetRequest.name());
+        pet.setSpecies(updatePetRequest.species());
+        pet.setBreed(updatePetRequest.breed());
+        pet.setDateOfBirth(updatePetRequest.dateOfBirth());
+        pet.setModifiedAt(LocalDateTime.now());
+
+        return mapToResponse(pet);
+    }
+
+    @Transactional
+    public void deletePet(UUID id, CustomUserDetails userDetails) {
+
+        UserEntity user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika"));
+
+        PetEntity pet = petRepository.findByIdAndOwnerId(id, user.getId()).orElseThrow(() -> new InvalidPetException("Nie znaleziono zwierzęcia"));
+
+        petRepository.delete(pet);
     }
 
     public PetResponse mapToResponse(PetEntity petEntity) {

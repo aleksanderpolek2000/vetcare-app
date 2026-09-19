@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<@NonNull UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
 
         UserResponse createUser = userService.createUser(request);
 
@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<@NonNull AuthResponse> loginUser(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> loginUser(@Valid @RequestBody LoginRequest request) {
 
         AuthResponse authResponse = userService.login(request);
 
@@ -39,7 +39,8 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<@NonNull String> getMe(Authentication authentication) {
+    public ResponseEntity<String> getMe(Authentication authentication) {
         return ResponseEntity.ok("Zalogowany użytkownik: " + authentication.getName());
     }
+
 }
