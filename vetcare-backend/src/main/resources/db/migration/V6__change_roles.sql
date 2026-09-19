@@ -1,0 +1,2 @@
+INSERT INTO roles (name) VALUES ('ROLE_VET')
+ON CONFLICT (name) DO NOTHING;
