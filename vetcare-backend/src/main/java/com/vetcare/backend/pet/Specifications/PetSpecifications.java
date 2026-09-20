@@ -22,12 +22,10 @@ public class PetSpecifications {
 
     public static Specification<@NonNull PetEntity> fetchOwner() {
         return (root, query, criteriaBuilder) -> {
-            if (Long.class.equals(query.getResultType())) {
-                return null;
-            } else {
+            if (!Long.class.equals(query.getResultType())) {
                 root.fetch("owner", JoinType.INNER);
-                return null;
             }
+            return null;
         };
     }
 }

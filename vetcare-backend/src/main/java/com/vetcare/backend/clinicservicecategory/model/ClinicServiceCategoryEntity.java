@@ -1,5 +1,6 @@
 package com.vetcare.backend.clinicservicecategory.model;
 
+import com.vetcare.backend.user.model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,7 +39,12 @@ public class ClinicServiceCategoryEntity {
     @Column(name = "display_order", unique = true)
     Integer displayOrder;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "created_by", nullable = false)
+    UserEntity createdBy;
+
     @Column(nullable = false)
-    Boolean active;
+    @Builder.Default
+    Boolean active = false;
 
 }

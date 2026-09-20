@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ public class PetController {
     private final PetService petService;
 
     @PostMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<PetResponse> createPet(@Valid @RequestBody CreatePetRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         PetResponse petResponse = petService.createPet(request, userDetails.getUsername());
@@ -35,6 +37,7 @@ public class PetController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<PageResponse<PetResponse>> getUserPets(@AuthenticationPrincipal CustomUserDetails userDetails, @ParameterObject @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
         PageResponse<PetResponse> petResponsePageResponse = petService.getUserPets(userDetails.getUsername(), pageable);
@@ -43,14 +46,16 @@ public class PetController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<PetResponse> updatePet(@PathVariable(name = "id") UUID id, @Valid @RequestBody UpdatePetRequest updatePetRequest, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         PetResponse petResponse = petService.updatePet(id, updatePetRequest, userDetails);
 
-        return ResponseEntity.status(HttpStatus.OK).body(petResponse);
+        return ResponseEntity.ok(petResponse);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<Void> deletePet(@PathVariable(name = "id") UUID id, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         petService.deletePet(id, userDetails);

@@ -14,12 +14,9 @@ public record CustomUserDetails(UserEntity userEntity) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Mapowanie ról na format zrozumiały dla Spring Security (ROLE_...)
-        return Optional.ofNullable(userEntity.getRoles())
-                .orElseGet(Collections::emptySet)
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
-                .collect(Collectors.toSet());
+        return userEntity.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
     }
 
     @Override

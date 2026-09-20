@@ -1,7 +1,5 @@
 package com.vetcare.backend.clinicservice.dto;
 
-import jakarta.validation.constraints.Size;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,5 +10,8 @@ public record ClinicServiceResponse(UUID id,
                                     String slug,
                                     LocalDateTime createdAt,
                                     LocalDateTime updatedAt,
+                                    Integer displayOrder,
+                                    UUID createdBy,
+                                    Boolean active,
                                     UUID categoryId) {
 }

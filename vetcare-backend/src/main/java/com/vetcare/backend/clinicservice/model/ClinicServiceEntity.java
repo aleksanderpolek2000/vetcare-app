@@ -1,6 +1,8 @@
 package com.vetcare.backend.clinicservice.model;
 
 import com.vetcare.backend.clinicservicecategory.model.ClinicServiceCategoryEntity;
+import com.vetcare.backend.clinicservicecategory.repository.ClinicServiceCategoryRepository;
+import com.vetcare.backend.user.model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,7 +25,7 @@ public class ClinicServiceEntity {
     @Column(nullable = false, length = 200)
     private String name;
 
-    @Column(length = 1000)
+    @Column(length = 2000)
     private String description;
 
     @Column(name = "image_path")
@@ -39,6 +41,17 @@ public class ClinicServiceEntity {
     @Column(name = "updated_at", nullable = false)
     @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @Column(name = "display_order", unique = true)
+    Integer displayOrder;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "created_by", nullable = false)
+    UserEntity createdBy;
+
+    @Column(nullable = false)
+    @Builder.Default
+    Boolean active = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")

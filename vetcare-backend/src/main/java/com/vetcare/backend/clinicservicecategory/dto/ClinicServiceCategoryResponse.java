@@ -10,5 +10,6 @@ public record ClinicServiceCategoryResponse(UUID id,
                                             LocalDateTime createdAt,
                                             LocalDateTime updatedAt,
                                             Integer displayOrder,
+                                            UUID createdBy,
                                             Boolean active) {
 }
