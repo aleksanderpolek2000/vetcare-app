@@ -1,7 +1,6 @@
 package com.vetcare.backend.clinicservice.model;
 
 import com.vetcare.backend.clinicservicecategory.model.ClinicServiceCategoryEntity;
-import com.vetcare.backend.clinicservicecategory.repository.ClinicServiceCategoryRepository;
 import com.vetcare.backend.user.model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;

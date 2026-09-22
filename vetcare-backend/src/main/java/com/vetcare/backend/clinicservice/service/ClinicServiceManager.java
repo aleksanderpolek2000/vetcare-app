@@ -1,7 +1,7 @@
 package com.vetcare.backend.clinicservice.service;
 
 import com.vetcare.backend.auth.model.CustomUserDetails;
-import com.vetcare.backend.clinicservice.Specifications.ClinicServiceSpecifications;
+import com.vetcare.backend.clinicservice.specifications.ClinicServiceSpecifications;
 import com.vetcare.backend.clinicservice.dto.ClinicServiceResponse;
 import com.vetcare.backend.clinicservice.dto.CreateClinicService;
 import com.vetcare.backend.clinicservice.dto.UpdateClinicService;

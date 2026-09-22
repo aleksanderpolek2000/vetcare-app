@@ -1,4 +1,4 @@
-package com.vetcare.backend.clinicservice.Specifications;
+package com.vetcare.backend.clinicservice.specifications;
 
 import com.vetcare.backend.clinicservice.model.ClinicServiceEntity;
 import jakarta.persistence.criteria.JoinType;

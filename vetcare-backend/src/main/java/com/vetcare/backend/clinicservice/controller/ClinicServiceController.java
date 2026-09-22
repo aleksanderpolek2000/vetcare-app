@@ -31,8 +31,8 @@ public class ClinicServiceController {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
-    @GetMapping("/category/{category_id}")
-    public ResponseEntity<List<ClinicServiceResponse>> getClinicServicesList(@PathVariable(name = "category_id") UUID categoryId) {
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<ClinicServiceResponse>> getClinicServicesList(@PathVariable(name = "categoryId") UUID categoryId) {
 
         List<ClinicServiceResponse> serviceResponseList = clinicServiceManager.getClinicServicesList(categoryId);
 
@@ -61,7 +61,7 @@ public class ClinicServiceController {
 
         ClinicServiceResponse serviceResponse = clinicServiceManager.updateClinicService(id, clinicServiceRequest, userDetails);
 
-        return ResponseEntity.ok(serviceResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(serviceResponse);
     }
 
     @DeleteMapping("/{id}")
@@ -69,7 +69,7 @@ public class ClinicServiceController {
     public ResponseEntity<Void> deleteClinicService(@PathVariable(name = "id") UUID id) {
         clinicServiceManager.deleteClinicService(id);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
 }
