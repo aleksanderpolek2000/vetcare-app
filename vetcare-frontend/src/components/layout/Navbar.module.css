@@ -1,0 +1,136 @@
+.header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logoWrapper {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-brand-100);
+  color: var(--color-brand-500);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.brandName {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.navLink:hover {
+  color: var(--color-brand-500);
+}
+
+.dropdownWrapper {
+  position: relative;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  padding: 10px 16px;
+  text-decoration: none;
+  color: var(--color-text-main);
+  font-size: var(--font-size-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.dropdownItem:hover {
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-500);
+}
+
+.dropdownEmpty {
+  padding: 10px 16px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.authZone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.appointmentBtn {
+  background-color: #10b981;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: var(--font-size-sm);
+}
+
+.appointmentBtn:hover {
+  background-color: #059669;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userEmail {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.logoutBtn, .loginBtn {
+  padding: 8px 16px;
+}

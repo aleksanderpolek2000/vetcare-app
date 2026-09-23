@@ -31,7 +31,7 @@ public class ClinicServiceController {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping
     public ResponseEntity<List<ClinicServiceResponse>> getClinicServicesList(@PathVariable(name = "categoryId") UUID categoryId) {
 
         List<ClinicServiceResponse> serviceResponseList = clinicServiceManager.getClinicServicesList(categoryId);

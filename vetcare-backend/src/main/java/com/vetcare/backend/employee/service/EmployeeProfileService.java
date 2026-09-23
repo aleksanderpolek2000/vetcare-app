@@ -2,6 +2,7 @@ package com.vetcare.backend.employee.service;
 
 import com.vetcare.backend.auth.model.CustomUserDetails;
 import com.vetcare.backend.common.exception.CertificateNotFoundException;
+import com.vetcare.backend.common.exception.EmployeeNotFoundException;
 import com.vetcare.backend.common.exception.InvalidOwnerException;
 import com.vetcare.backend.common.storage.FileStorageService;
 import com.vetcare.backend.employee.dto.AddCertificateRequest;
@@ -29,6 +30,13 @@ public class EmployeeProfileService {
     private final EmployeeCertificateRepository certificateRepository;
     private final FileStorageService fileStorageService;
     private final UserRepository userRepository;
+
+    @Transactional(readOnly = true)
+    public List<EmployeeProfileResponse> getAllEmployees (){
+        List<EmployeeEntity> employeeEntities = employeeRepository.findAll();
+
+        return employeeEntities.stream().map(this::mapToResponse).toList();
+    }
 
     @Transactional(readOnly = true)
     public EmployeeProfileResponse getMyProfile(CustomUserDetails userDetails) {

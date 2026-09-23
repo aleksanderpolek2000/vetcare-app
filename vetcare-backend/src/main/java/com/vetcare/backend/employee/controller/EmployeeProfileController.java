@@ -14,49 +14,58 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/employees/me")
+@RequestMapping("/api/v1/employees")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('VET', 'EMPLOYEE', 'OWNER')")
 public class EmployeeProfileController {
 
-    private final EmployeeProfileService employeeProfileManager;
+    private final EmployeeProfileService employeeProfileService;
 
     @GetMapping
-    public ResponseEntity<EmployeeProfileResponse> getMyProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        return ResponseEntity.ok(employeeProfileManager.getMyProfile(userDetails));
+    public ResponseEntity<List<EmployeeProfileResponse>> getAllEmployees(){
+        List<EmployeeProfileResponse> employeeProfileResponses =  employeeProfileService.getAllEmployees();
+
+        return ResponseEntity.ok(employeeProfileResponses);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<EmployeeProfileResponse> getMyProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return ResponseEntity.ok(employeeProfileService.getMyProfile(userDetails));
+    }
+
+    @PreAuthorize("hasAnyRole('VET', 'EMPLOYEE', 'OWNER')")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<EmployeeProfileResponse> updateMyProfile(
             @Valid @ModelAttribute UpdateEmployeeProfile request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
-        return ResponseEntity.ok(employeeProfileManager.updateMyProfile(request, userDetails));
+        return ResponseEntity.ok(employeeProfileService.updateMyProfile(request, userDetails));
     }
 
+    @PreAuthorize("hasAnyRole('VET', 'EMPLOYEE', 'OWNER')")
     @PostMapping(value = "/certificates", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<EmployeeProfileResponse> addCertificate(
             @Valid @ModelAttribute AddCertificateRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(employeeProfileManager.addCertificate(request, userDetails));
+                .body(employeeProfileService.addCertificate(request, userDetails));
     }
-
+    @PreAuthorize("hasAnyRole('VET', 'EMPLOYEE', 'OWNER')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<EmployeeProfileResponse> createMyProfile(
             @Valid @ModelAttribute UpdateEmployeeProfile request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(employeeProfileManager.createMyProfile(request, userDetails));
+                .body(employeeProfileService.createMyProfile(request, userDetails));
     }
-
+    @PreAuthorize("hasAnyRole('VET', 'EMPLOYEE', 'OWNER')")
     @DeleteMapping("/certificates/{id}")
     public ResponseEntity<Void> deleteCertificate(
             @PathVariable UUID id,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
-        employeeProfileManager.deleteCertificate(id, userDetails);
+        employeeProfileService.deleteCertificate(id, userDetails);
         return ResponseEntity.noContent().build();
     }
 }
